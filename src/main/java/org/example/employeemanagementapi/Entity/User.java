@@ -3,6 +3,7 @@ package org.example.employeemanagementapi.Entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -10,12 +11,8 @@ public class User {
     private Long id;
 
     private String username;
-    private String email;
     private String password;
     private String role;
-
-    public User() {
-    }
 
     public Long getId() {
         return id;
@@ -31,14 +28,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
