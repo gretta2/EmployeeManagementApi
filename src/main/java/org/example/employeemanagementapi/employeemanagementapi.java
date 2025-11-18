@@ -4,10 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EmployeeManagementApiApplication {
-
+public class employeemanagementapi {
     public static void main(String[] args) {
-        SpringApplication.run(EmployeeManagementApiApplication.class, args);
+        SpringApplication.run(employeemanagementapi.class, args);
     }
-
 }
