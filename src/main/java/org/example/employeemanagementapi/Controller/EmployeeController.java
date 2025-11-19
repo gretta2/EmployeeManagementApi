@@ -1,8 +1,8 @@
 package org.example.employeemanagementapi.Controller;
 
-import lombok.RequiredArgsConstructor;
 import org.example.employeemanagementapi.Entity.Employee;
 import org.example.employeemanagementapi.Service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +10,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/employees")
-@RequiredArgsConstructor
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    
+    @Autowired
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     // CREATE --- Admin only (you will secure later)
     @PostMapping

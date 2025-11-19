@@ -25,7 +25,7 @@ public class JwtUtil {
 
     public String extractUsername(String token){
         return Jwts.parserBuilder()
-                .setSigningKey(secret.getBytes())
+                .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes()))
                 .build()
                 .parseClaimsJws(token)
                 .getBody()

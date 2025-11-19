@@ -1,6 +1,6 @@
 package org.example.employeemanagementapi.Security;
 
-import org.example.employeemanagementapi.Service.UserService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,11 +17,11 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final UserService userService;
+    private final UserDetailsService userDetailsService;
 
-    public JwtFilter(JwtUtil jwtUtil, UserService userService) {
+    public JwtFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
         this.jwtUtil = jwtUtil;
-        this.userService = userService;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -36,14 +36,14 @@ public class JwtFilter extends OncePerRequestFilter {
             String username = jwtUtil.extractUsername(token);
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                var user = userService.findByUsername(username);
+                var userDetails = userDetailsService.loadUserByUsername(username);
 
-                if (user != null) {
+                if (userDetails != null) {
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(
-                                    user.getUsername(),
+                                    userDetails.getUsername(),
                                     null,
-                                    java.util.List.of(() -> user.getRole())
+                                    userDetails.getAuthorities()
                             );
 
                     authenticationToken.setDetails(
